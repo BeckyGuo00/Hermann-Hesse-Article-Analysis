@@ -1,0 +1,106 @@
+import os
+import csv
+import xml.etree.ElementTree as ET
+
+
+tei_folder = "Project/hesse_tei" 
+csvfile = "Project/metadata of hesse project.csv"
+
+def load_metadata_from_csv(csv_path):
+    """
+    Loads metadata from a CSV file into a dictionary, keyed by file name.
+    The CSV is assumed to have columns: 'title', 'year', 'genre', 'originalLanguage'.
+    Modify column names or structure to match your actual CSV.
+    """
+    metadata_dict = {}
+    with open(csv_path, 'r', encoding='utf-8') as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            # We'll assume the CSV's 'title' + ".xml" == the actual TEI filename.
+            # e.g., if row['title'] = "Beneath The Wheel", the TEI file is "Beneath The Wheel.xml"
+            if 'title' not in row:
+                # If your CSV uses a different column name, change this accordingly
+                continue
+
+            csv_title = row['title'].strip()
+            if not csv_title:
+                # Skip rows with empty title
+                continue
+
+            # Construct the expected file name
+            filename = csv_title + ".xml"
+            
+            # Store the metadata in a dict keyed by this filename
+            metadata_dict[filename] = {
+                'title': csv_title,  # if you also want the exact title text
+                'year': row.get('year', '').strip(),
+                'genre': row.get('genre', '').strip(),
+                'originalLanguage': row.get('originalLanguage', '').strip(),
+                'source': row.get('source', '').strip(),
+                'originalfileformat': row.get('originalfileformat', '').strip()
+            }
+    return metadata_dict
+
+def add_metadata_to_tei(file_path, row_data):
+    """
+    Given a file path to a TEI XML file and a dictionary of metadata,
+    parse the TEI, insert the new metadata tags under <titleStmt>, then save.
+    """
+    tree = ET.parse(file_path)
+    root = tree.getroot()
+
+    # If there's no namespace in your TEI files:
+    title_stmt = root.find('.//titleStmt')
+    title_element = root.find('.//title')
+
+    # If your TEI has a namespace, you'll need something like:
+    # ns = {'tei': 'http://www.tei-c.org/ns/1.0'}
+    # title_stmt = root.find('.//tei:titleStmt', ns)
+    # title_element = root.find('.//tei:title', ns)
+
+    if title_stmt is None:
+        print(f"Skipping {file_path}: <titleStmt> not found.")
+        return
+    
+    # If <title> is missing, you could create it or skip, depending on your needs.
+    if title_element is None:
+        # Create <title> if it doesn’t exist – or you might prefer to skip
+        title_element = ET.SubElement(title_stmt, "title")
+        title_element.text = row_data['title']  # Insert the CSV title, if you want
+
+    # Insert metadata sub-elements (e.g. <year>, <genre>, <originalLanguage>)
+    # Feel free to rename these or insert them under different parts of the TEI header
+    year_elem = ET.SubElement(title_stmt, "year")
+    year_elem.text = row_data['year']
+
+    genre_elem = ET.SubElement(title_stmt, "genre")
+    genre_elem.text = row_data['genre']
+
+    lang_elem = ET.SubElement(title_stmt, "originalLanguage")
+    lang_elem.text = row_data['originalLanguage']
+    
+    source_elem = ET.SubElement(title_stmt, "source")
+    source_elem.text = row_data['source']
+    
+    format_elem = ET.SubElement(title_stmt, "originalfileformat")
+    format_elem.text = row_data['originalfileformat']
+
+    # Overwrite/update the file
+    tree.write(file_path, encoding="utf-8", xml_declaration=True)
+    print(f"Updated: {file_path}")
+
+def main():
+    # 1) Load metadata from CSV into a dict keyed by "filename"
+    metadata_dict = load_metadata_from_csv(csvfile)
+
+    # 2) Iterate over each .xml file in TEI_DIRECTORY
+    for entry in os.scandir(tei_folder):
+        if entry.is_file() and entry.name.lower().endswith(".xml"):
+            # If the file name is in our metadata dictionary, process it
+            if entry.name in metadata_dict:
+                add_metadata_to_tei(entry.path, metadata_dict[entry.name])
+            else:
+                print(f"No matching CSV metadata for file: {entry.name}")
+
+if __name__ == "__main__":
+    main()

@@ -10,6 +10,28 @@ This project combines traditional literary interest with **digital tools** to an
 
 ---
 
+## 🔍 Conclusions 
+
+- **Low Novel Similarity**: Cosine similarity revealed that Hesse’s novels are thematically diverse, with the highest score (0.0905) between *Demian* and *Siddhartha*.
+- **Theme-Specific Keywords**: TF-IDF highlighted terms like `"magister"`, `"game"` in *The Glass Bead Game* and `"river"`, `"siddhartha"` in *Siddhartha*.
+- **Recurring Themes**: Topic modeling uncovered major recurring topics:
+  - Topic 0: Education (`"student"`, `"instruction"`)
+  - Topic 8: Politics/War (`"nation"`, `"soldier"`)
+  - Topic 16: Art (`"studio"`, `"painter"`)
+- **Philosophical Duality**: Frequent references to contradictions (e.g., awakening vs. sterility) reflect Hesse's introspective narrative structure.
+
+---
+
+## 🛠️ Tools & Technologies
+
+- **Languages:** Python  
+- **Libraries:** Pandas, NumPy, Scikit-learn, NLTK, spaCy, Gensim  
+- **Visualization:** Matplotlib, Seaborn  
+- **Environments:** Jupyter Notebook  
+- **Other Tools:** OpenRefine (text cleaning)
+
+---
+
 ## 📁 Repository Contents
 
 - `doc_term_matrix.ipynb`: Analysis using TF-IDF and cosine similarity to measure word importance and inter-novel similarity.
@@ -42,26 +64,6 @@ This project combines traditional literary interest with **digital tools** to an
 
 ---
 
-## 🔍 Key Findings
-
-### Linguistic and Symbolic Themes
-- Frequent use of terms like *psychological*, *awakening*, *dream*, *wisdom*, and *opposition* reflects Hesse’s interest in internal conflict and symbolic transformation.
-- Duality is a recurring theme, illustrated through contrasting terms like *fraud/truth* and *awakening/sterility*.
-
-### TF-IDF Results
-- Strong topic-specific terms were detected:
-  - **"magister"**, **"game"** in *The Glass Bead Game*
-  - **"siddhartha"**, **"river"** in *Siddhartha*
-- Low similarity scores highlight the uniqueness of each novel. Highest: *Demian* and *Siddhartha* (0.0905)
-
-### Topic Modeling Insights
-- **Topic 0**: Education – *student*, *pupil*, *instruction*
-- **Topic 8**: War/Politics – *nation*, *soldier*, *fatherland*
-- **Topic 16**: Art – *studio*, *painter*, *painting*
-- Most documents had low similarity (max: 0.0153), reinforcing their thematic diversity.
-
----
-
 ## ⚠️ Challenges
 
 - **Translation inconsistency**: Different English versions of Hesse’s texts varied in word choice.
@@ -75,15 +77,6 @@ This project combines traditional literary interest with **digital tools** to an
 - **TF-IDF** captures word-level uniqueness, suitable for keyword extraction but less effective for thematic analysis.
 - **Topic Modeling** captures conceptual groupings and recurring themes across texts, even when vocabulary differs.
 - Together, these methods provide complementary views into Hesse’s literary style and philosophical exploration.
-
----
-
-## 👤 Author
-
-**Fanyu Guo**  
-DIGS-20031-1  
-University of Chicago  
-March 2025
 
 ---
 

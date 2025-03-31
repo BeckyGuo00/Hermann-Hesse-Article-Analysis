@@ -1,6 +1,6 @@
 # Hermann Hesse Novels Analysis
 
-Welcome to the **Hermann Hesse Article Analysis** project — a digital humanities study exploring the thematic and conceptual structure of Hermann Hesse's novels using computational text analysis. This project was created as part of **DIGS-20031-1** under the guidance of **Clovis Gladstone** at the University of Chicago.
+Welcome to the **Hermann Hesse Article Analysis** project — a digital humanities study exploring the thematic and conceptual structure of Hermann Hesse's novels using computational text analysis.
 
 ## 📘 Project Overview
 

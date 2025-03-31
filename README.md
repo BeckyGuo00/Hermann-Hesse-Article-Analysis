@@ -25,10 +25,10 @@ This project combines traditional literary interest with **digital tools** to an
 ## 🛠️ Tools & Technologies
 
 - **Languages:** Python  
-- **Libraries:** Pandas, NumPy, Scikit-learn, NLTK, spaCy, Gensim  
+- **Libraries:** Pandas, NumPy, Scikit-learn, NLTK, spaCy, TfidfVectorizer, cosine_similarity
 - **Visualization:** Matplotlib, Seaborn  
-- **Environments:** Jupyter Notebook  
-- **Other Tools:** OpenRefine (text cleaning)
+- **Environments:** Jupyter Notebook
+- **Other tool:** OCR
 
 ---
 
